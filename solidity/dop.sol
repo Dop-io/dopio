@@ -9,17 +9,9 @@ contract CryptoDop is ERC721, ERC721URIStorage {
     Counters.Counter private _tokenIds;
 
     constructor() ERC721("CryptoDop", "DOP") {}
-
-    function awardItem(address player, string memory tokenURI)
-        public
-        returns (uint256)
-    {
-        _tokenIds.increment();
-
-        uint256 newItemId = _tokenIds.current();
-        _mint(player, newItemId);
-        _setTokenURI(newItemId, tokenURI);
-
-        return newItemId;
-    }
+    
+    function mint(uint256 tokenId) public payable {
+        
+        require(msg.value >= 0.05 ether, "Not enough ETH sent: check price.");
+        _safeMint(_msgSender(), tokenId);
 }
