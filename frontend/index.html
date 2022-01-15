@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      This is the page head - it contains info the browser uses to display the page
+      You won't see what's in the head in the page
+      Scroll down to the body element for the page content
+    -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <script src="https://unpkg.com/realm-web/dist/bundle.iife.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.8.0/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 
+      This is an HTML comment
+      You can write text in a comment and the content won't be visible in the page
+    -->
+
+    <title>dop.io</title>
+
+    <link rel="stylesheet" href="/style.css" />
+
+    <!-- Import the webpage's javascript file -->
+    <script src="/script.js" defer></script>
+  </head>
+  <body>
+
+<h1 class="font-extrabold text-5xl">dop nft</h1>
+    
+<div x-data="displayData()">
+ 
+    <template x-for="item in list">
+        <div>
+            <span x-text="item.id" class="font-bold text-2xl"></span>
+            <template x-for="row in item.pixels">
+              <div x-text="row"></div>
+            </template>
+          
+        </div>
+    </template>
+</div>
+          
+    <footer class="footer">
+
+    </footer>
+    <script>
+const app = new Realm.App({ id: "application-0-tonmp" });
+const credentials = Realm.Credentials.anonymous();
+
+async function connect() {
+  try {
+    const user = await app.logIn(credentials);
+    console.log(user)
+  } catch(err) {
+    console.error("Failed to log in", err);
+  }
+}
+
+connect()
+
+async function showAssets(callback) {
+  const mongodb = app.currentUser.mongoClient("mongodb-atlas");
+  const assets = await mongodb.db("dopio").collection("assets").aggregate(
+   [ { $sample: { size: 10 } } ]
+)
+  callback (assets)
+}
+      
+displayData = function () {
+  return {
+    open:false,
+    list:[],
+    async init () {
+      showAssets(data=>{
+        console.log(data)
+        this.list=data
+      })
+      
+    }
+  }
+}
+    </script>
+  </body>
+</html>
