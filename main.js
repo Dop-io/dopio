@@ -1,12 +1,13 @@
 // Moralis.initialize("rIDcnRq3Mps2hzqTbk0MLuhWhBp3sl9SvbWJcQfi"); //APP_ID
 // Moralis.serverURL = "https://xupcupekjhqi.usemoralis.com:2053/server"; //SERVER URL 
 
-const serverUrl = "https://inkmvcv5mupx.usemoralis.com:2053/server";
-const appId = "zN8sE9c1gNR7UQaHoNCrV3AryV2JouXgQ3FYDhgS";
-CONTRACT_ADDRESS = "0x924a32A26dbD2e17d70f3cdC529f26BE5A0B6803";
+const serverUrl = "https://udbllszok5jz.usemoralis.com:2053/server";
+const appId = "rBVQwUHgIg2xttPvWFTAPyB6hkcuZmHkc7drTcWQ";
+CONTRACT_ADDRESS = "0x0E291077Fd0d912177daF2815C94075CDbAC74b4";
 let currentUser;
 
 Moralis.start({ serverUrl, appId });
+
 
 
 function fetchNFTMetadata(NFTs) {
@@ -15,7 +16,7 @@ function fetchNFTMetadata(NFTs) {
         const nft = NFTs[i];
         let id = nft.token_id;
         //Call Moralis Cloud function -> Static JSON file 
-        promises.push(fetch("https://inkmvcv5mupx.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=zN8sE9c1gNR7UQaHoNCrV3AryV2JouXgQ3FYDhgS&nftId=" + id)
+        promises.push(fetch("https://udbllszok5jz.usemoralis.com:2053/server/functions/getNFT?_ApplicationId=rBVQwUHgIg2xttPvWFTAPyB6hkcuZmHkc7drTcWQ&nftId=" + id)
             .then(res => res.json())
             .then(res => JSON.parse(res.result))
             .then(res => { nft.metadata = res })
@@ -39,7 +40,7 @@ function fetchNFTMetadata(NFTs) {
 
 function renderInventory(NFTs, ownerData) {
     const parent = document.getElementById("app");
-    for (let i = 0; i <= NFTs.length; i++) {
+    for (let i = 0; i < NFTs.length; i++) {
         const nft = NFTs[i];
         console.log(nft);
         let htmlString = `
@@ -57,7 +58,7 @@ function renderInventory(NFTs, ownerData) {
         `
 
         let col = document.createElement("div");
-        col.className = "col col-md-4"
+        col.className = "col col-md-3"
         col.innerHTML = htmlString;
         parent.appendChild(col);
 
